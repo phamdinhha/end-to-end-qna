@@ -6,6 +6,7 @@ from googlesearch import search
 from documentretriever import DocumentRetriever
 import pandas as pd
 from qamodelloader import QAModelLoader
+from customdocumentretriever.customgooglesearchengine import CustomGoogleSearchEngine
 
 # configuration
 DEBUG = True
@@ -18,22 +19,22 @@ app.config.from_object(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
 
-
-documentRetriever = DocumentRetriever(data_path = "./data/bnpp_newsroom-v1.1.csv")
 model = QAModelLoader()
+data_path = "./data/customdata.csv"
 
-# model_path = 'D:/Deep_learning/Workspace/Question_Answering_System/model/best_model_2/'
-# model = QuestionAnsweringModel('bert', model_path, use_cuda=False)
+@app.route('/fromgoolesearch', methods=['GET'])
+def fromgooglesearch():
 
-@app.route('/fromcollecteddata', methods=['GET'])
-def fromcollecteddata():
-
-    query = 'Since when does the Excellence Program of BNP Paribas exist?'
+    query = request.args.get("query")
+    search_engine = CustomGoogleSearchEngine(query)
+    doc_trunk = search_engine.buildDocumentTrunk()
+    documentRetriever = DocumentRetriever(data_path = doc_trunk)
     squad_examples = documentRetriever.get_most_relevant_paragraph(query)
     context = squad_examples['paragraphs'][0]['context']
+    print(context)
     answer = model.answer(query, context)
+    #print(paragraphs[0])
     print(answer)
-
     return jsonify({
         'query': query, 
         'answer': answer,
@@ -41,10 +42,11 @@ def fromcollecteddata():
     })
 
 
-@app.route('/fromgooglesearch', methods=['GET'])
-def fromgooglesearch():
+@app.route('/fromcustomdata', methods=['GET'])
+def fromcollecteddata():
 
     query = request.args.get("query")
+    documentRetriever = DocumentRetriever(data_path = data_path)
     squad_examples = documentRetriever.get_most_relevant_paragraph(query)
     context = squad_examples['paragraphs'][0]['context']
     answer = model.answer(query, context)
