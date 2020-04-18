@@ -3,14 +3,14 @@ from transformers import AlbertTokenizer, AlbertForQuestionAnswering
 from transformers import BertTokenizer, BertForQuestionAnswering
 
 
-path = "D:/Deep_learning/Workspace/Question_Answering_System/model/best_model_2/"
-# model = QuestionAnsweringModel('bert', model_path, use_cuda=False)
+model_path = "path_to_your_model"
+
 
 class QAModelLoader:
 
-    def __init__(self, model_path = 'D:/Deep_learning/Workspace/Question_Answering_System/model/best_model_2/'):
-        self.tokenizer = BertTokenizer.from_pretrained('D:/Deep_learning/Workspace/Question_Answering_System/model/best_model_2/')
-        self.model = BertForQuestionAnswering.from_pretrained('D:/Deep_learning/Workspace/Question_Answering_System/model/best_model_2/')
+    def __init__(self, model_path = model_path):
+        self.tokenizer = BertTokenizer.from_pretrained(model_path)
+        self.model = BertForQuestionAnswering.from_pretrained(model_path)
 
     def answer(self, question, text):
         input_dict = self.tokenizer.encode_plus(question, text, return_tensors='pt', max_length=512)
