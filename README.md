@@ -14,7 +14,7 @@ The api was written by Python3:
 - Use the question to retrive the most related paragraph from document trunks
 - The first api takes the question and perform google search and then generate the document trunk
 - The second api takes an existing document trunk as the input
-- The question and paragraphs are then passed to BERT model to generate the answer
+- The question and paragraph are then passed to BERT model to generate the answer
 ## UI
 The web ui was written based on VueJs and I'm still updating this.
 ## References
