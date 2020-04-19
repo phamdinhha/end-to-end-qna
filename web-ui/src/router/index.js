@@ -1,12 +1,17 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import hpqaUI from '../components/hpqaUI.vue'
+import hpqaUI from '../components/hpqaUI.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
+    name: 'hpqaUI',
+    component: hpqaUI,
+  },
+  {
+    path: '/rawbert',
     name: 'hpqaUI',
     component: hpqaUI,
   },
