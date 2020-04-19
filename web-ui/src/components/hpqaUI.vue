@@ -1,9 +1,10 @@
 <template>
   <!-- eslint-disable max-len -->
   <div class='hpqaUI'>
-    <h1 class='header'>Simple Question Answering System</h1>
-    <p><center>
-      by Ha Pham D
+    <h1 class='instagram'>Simple Question Answering System</h1>
+    <p>
+      <center>
+      by HaPhamD
       </center>
     </p>
     <link
@@ -13,6 +14,18 @@
       crossorigin="anonymous"
     >
     <div class='input m-4'>
+      <center>
+        <toggle-button
+          class="mb-3"
+          v-model="googlesearch"
+          :value="false"
+          color ="#f09433"
+          :sync="true"
+          :width="120"
+          :labels="{checked:'Googlesearch', unchecked: 'Filesystem'}"
+        />
+      </center>
+
       <b-form @submit="onSubmit">
         <b-input-group>
           <b-form-input v-model="query" placeholder='Ask me an easy question :D'></b-form-input>
@@ -48,18 +61,27 @@
 
 <script>
 import axios from 'axios';
+import { ToggleButton } from 'vue-js-toggle-button';
 
 export default {
   name: 'hpqaUI',
+  components: {
+    ToggleButton,
+  },
   props: {
-    api_endpoint_cpu: {
+    api_endpoint_googlesearch: {
       type: String,
-      default: 'http://localhost:5000/fromcollecteddata',
+      default: 'http://localhost:5000/fromgooglesearch',
+    },
+    api_endpoint_filesystem: {
+      type: String,
+      default: 'http://localhost:5000/fromcustomdata',
     },
   },
   data() {
     return {
       query: '',
+      googlesearch: false,
       status: 'started',
       answer: '',
       title: '',
@@ -68,9 +90,12 @@ export default {
   },
   methods: {
     onSubmit(evt) {
-      const apiEndpoint = this.api_endpoint_cpu;
       evt.preventDefault();
       this.status = 'loading';
+      let apiEndpoint = this.api_endpoint_googlesearch;
+      if (!this.googlesearch) {
+        apiEndpoint = this.api_endpoint_filesystem;
+      }
       axios
         .get(apiEndpoint, { params: { query: this.query } })
         .then((response) => {
@@ -100,6 +125,42 @@ export default {
 .form-control:focus {
   border-color: #ae41a7 !important;
   box-shadow: 0 0 5px #ae41a7 !important;
+}
+
+.instagram{
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800;
+  letter-spacing: +0.37px;
+  color: rgb(255, 255, 255);
+  background: #f09433;
+  background: -moz-linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #806878 100%
+  );
+  background: linear-gradient(45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=#f09433,
+    endColorstr=#bc1888,
+    GradientType=1
+  );
 }
 
 .header {

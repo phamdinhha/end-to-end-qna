@@ -18,5 +18,9 @@ The api was written in Python3 with the help of Flask :D:
 ## UI
 The web ui was written in VueJs and I'm still updating this.
 ## References
+| Name         |Description                      |
+| ------------ | -------------------------------- |
+| Abhinand on kaggle | https://www.kaggle.com/abhinand05/bert-for-humans-tutorial-baseline |
+| CDQA          | https://github.com/cdqa-suite/cdQA |
 ## Demo
 ![demo](/demo/demo2.png)
