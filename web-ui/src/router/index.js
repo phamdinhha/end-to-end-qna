@@ -12,8 +12,8 @@ const routes = [
   },
   {
     path: '/rawbert',
-    name: 'hpqaUI',
-    component: hpqaUI,
+    name: 'bertOnlyUI',
+    component: bertOnlyUI,
   },
 ];
 

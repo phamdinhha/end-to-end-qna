@@ -58,5 +58,20 @@ def fromcollecteddata():
         'paragraph': context
     })
 
+
+@app.route('/bertonly', methods=['GET'])
+def bertonly():
+
+    query = request.args.get("query")
+    paragraph = request.args.get("paragraph")
+    answer = model.answer(query, paragraph)
+    print(answer)
+
+    return jsonify({
+        'query': query, 
+        'answer': answer,
+        'paragraph': paragraph
+    })
+
 if __name__ == '__main__':
     app.run()
